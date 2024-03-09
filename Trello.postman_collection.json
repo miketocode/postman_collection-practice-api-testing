@@ -1,0 +1,967 @@
+{
+	"info": {
+		"_postman_id": "f31a6992-7008-4d01-b999-ddf6fb842da3",
+		"name": "Trello",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22614479",
+		"_collection_link": "https://cloudy-crater-719362.postman.co/workspace/Gravity-Global-Training-Workspa~9097d6e6-f065-411c-a928-c69dad7bdee6/collection/22614479-f31a6992-7008-4d01-b999-ddf6fb842da3?action=share&source=collection_link&creator=22614479"
+	},
+	"item": [
+		{
+			"name": "Tworzenie tablicy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify created board name\", () => {\r",
+							"    pm.expect(resBody.name).to.eql(pm.collectionVariables.get(\"boardName\"));\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify response id\", () => {\r",
+							"    pm.expect(resBody.id.length).to.greaterThan(10);\r",
+							"    pm.collectionVariables.set(\"boardID\", resBody.id);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/?name={{boardName}}&key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{boardName}}"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokazywanie listy tablic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" let resBody\r",
+							" \r",
+							" pm.test(\"should verify status code\", () => {\r",
+							"     pm.response.to.have.status(200);\r",
+							"     resBody = pm.response.json();\r",
+							" })\r",
+							"\r",
+							" pm.test(\"should verify type of name\", () => {\r",
+							"     resBody.map(item => {\r",
+							"         pm.expect(item.name).to.be.a(\"string\");\r",
+							"     })\r",
+							" })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/members/me/boards/?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"me",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Pokazywanie listy tablic",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/members/me/boards/?key=db4b2d41baaa9cabb3de7ff23758d547&token=112c7857912126de728d34dd622a889d5c5f5ff2416a8ba565aea1546b8fb864",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"members",
+								"me",
+								"boards",
+								""
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "db4b2d41baaa9cabb3de7ff23758d547"
+								},
+								{
+									"key": "token",
+									"value": "112c7857912126de728d34dd622a889d5c5f5ff2416a8ba565aea1546b8fb864"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Nov 2022 12:01:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "9843"
+						},
+						{
+							"key": "X-Dns-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Surrogate-Control",
+							"value": "no-store"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, must-revalidate, no-cache, no-store"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 01 Jan 1970 00:00:00"
+						},
+						{
+							"key": "X-Trello-Version",
+							"value": "1.169584.0"
+						},
+						{
+							"key": "X-Trello-Environment",
+							"value": "Production (Micros)"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, PUT, POST, DELETE"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Authorization, Accept, Content-Type"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Token-Interval-Ms",
+							"value": "10000"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Token-Max",
+							"value": "100"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Token-Remaining",
+							"value": "99"
+						},
+						{
+							"key": "X-Rate-Limit-Db-Query-Time-Interval-Ms",
+							"value": "600000"
+						},
+						{
+							"key": "X-Rate-Limit-Db-Query-Time-Max",
+							"value": "7200000"
+						},
+						{
+							"key": "X-Rate-Limit-Db-Query-Time-Remaining",
+							"value": "7199990"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Key-Interval-Ms",
+							"value": "10000"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Key-Max",
+							"value": "300"
+						},
+						{
+							"key": "X-Rate-Limit-Api-Key-Remaining",
+							"value": "299"
+						},
+						{
+							"key": "X-Rate-Limit-Member-Interval-Ms",
+							"value": "10000"
+						},
+						{
+							"key": "X-Rate-Limit-Member-Max",
+							"value": "375"
+						},
+						{
+							"key": "X-Rate-Limit-Member-Remaining",
+							"value": "374"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "preAuthProps=s%3A63736a24c6df3e00c1a28d7a%3AisEnterpriseAdmin%3Dfalse.yzTHRFHL3k6wizp4yMOd8YfJU6XJDtcMl4HRRdtba74; Path=/; HttpOnly"
+						},
+						{
+							"key": "X-Server-Time",
+							"value": "1668513689510"
+						},
+						{
+							"key": "X-Trello-Actual-Fastget-Path",
+							"value": "fast"
+						},
+						{
+							"key": "Server",
+							"value": "AtlassianEdge"
+						},
+						{
+							"key": "Expect-Ct",
+							"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; preload"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Atl-Traceid",
+							"value": "bdd89ab3f3579643"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"endpoints\": [{\"url\": \"https://dz8aopenkvv6s.cloudfront.net\"}], \"group\": \"endpoint-1\", \"include_subdomains\": true, \"max_age\": 600}"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"failure_fraction\": 0.001, \"include_subdomains\": true, \"max_age\": 600, \"report_to\": \"endpoint-1\"}"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"63736abc553c5702bc4ab1d9\",\n        \"name\": \"Test board\",\n        \"desc\": \"\",\n        \"descData\": null,\n        \"closed\": false,\n        \"dateClosed\": null,\n        \"idOrganization\": \"63736a2b2693f10129384d9f\",\n        \"idEnterprise\": null,\n        \"limits\": {\n            \"attachments\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 36000,\n                    \"warnAt\": 28800\n                },\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000,\n                    \"warnAt\": 800\n                }\n            },\n            \"boards\": {\n                \"totalMembersPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1600,\n                    \"warnAt\": 1280\n                },\n                \"totalAccessRequestsPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 4000,\n                    \"warnAt\": 3200\n                }\n            },\n            \"cards\": {\n                \"openPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 5000,\n                    \"warnAt\": 4000\n                },\n                \"openPerList\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 5000,\n                    \"warnAt\": 4000\n                },\n                \"totalPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 2000000,\n                    \"warnAt\": 1600000\n                },\n                \"totalPerList\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000000,\n                    \"warnAt\": 800000\n                }\n            },\n            \"checklists\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1800000,\n                    \"warnAt\": 1440000\n                },\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 500,\n                    \"warnAt\": 400\n                }\n            },\n            \"checkItems\": {\n                \"perChecklist\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 200,\n                    \"warnAt\": 160\n                }\n            },\n            \"customFields\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 50,\n                    \"warnAt\": 40\n                }\n            },\n            \"customFieldOptions\": {\n                \"perField\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 50,\n                    \"warnAt\": 40\n                }\n            },\n            \"labels\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000,\n                    \"warnAt\": 800\n                }\n            },\n            \"lists\": {\n                \"openPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 500,\n                    \"warnAt\": 400\n                },\n                \"totalPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 3000,\n                    \"warnAt\": 2400\n                }\n            },\n            \"stickers\": {\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 70,\n                    \"warnAt\": 56\n                }\n            },\n            \"reactions\": {\n                \"perAction\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 900,\n                    \"warnAt\": 720\n                },\n                \"uniquePerAction\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 17,\n                    \"warnAt\": 14\n                }\n            }\n        },\n        \"pinned\": false,\n        \"starred\": false,\n        \"url\": \"https://trello.com/b/QThpOGQw/test-board\",\n        \"prefs\": {\n            \"permissionLevel\": \"org\",\n            \"hideVotes\": false,\n            \"voting\": \"disabled\",\n            \"comments\": \"members\",\n            \"invitations\": \"members\",\n            \"selfJoin\": true,\n            \"cardCovers\": true,\n            \"isTemplate\": false,\n            \"cardAging\": \"regular\",\n            \"calendarFeedEnabled\": false,\n            \"hiddenPluginBoardButtons\": [],\n            \"switcherViews\": [\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1da\",\n                    \"viewType\": \"Board\",\n                    \"enabled\": true,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1da\"\n                },\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1db\",\n                    \"viewType\": \"Table\",\n                    \"enabled\": true,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1db\"\n                },\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1dc\",\n                    \"viewType\": \"Calendar\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1dc\"\n                },\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1dd\",\n                    \"viewType\": \"Dashboard\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1dd\"\n                },\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1de\",\n                    \"viewType\": \"Timeline\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1de\"\n                },\n                {\n                    \"_id\": \"63736abc553c5702bc4ab1df\",\n                    \"viewType\": \"Map\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736abc553c5702bc4ab1df\"\n                }\n            ],\n            \"background\": \"63735afbd35fdd00bcc58bcb\",\n            \"backgroundColor\": null,\n            \"backgroundImage\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/885b73c9d8a7363444d5465b0c813fbe/photo-1668423389856-2a82e96ee01b\",\n            \"backgroundImageScaled\": [\n                {\n                    \"width\": 140,\n                    \"height\": 79,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/140x79/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 256,\n                    \"height\": 144,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x144/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 480,\n                    \"height\": 270,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x270/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 960,\n                    \"height\": 540,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/960x540/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 1024,\n                    \"height\": 576,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1024x576/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 1280,\n                    \"height\": 720,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x720/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 1920,\n                    \"height\": 1080,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1920x1080/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 2048,\n                    \"height\": 1152,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2048x1152/a3274a19e3b7e7f3f50c8e44a6af01b3/photo-1668423389856-2a82e96ee01b.jpg\"\n                },\n                {\n                    \"width\": 2560,\n                    \"height\": 1440,\n                    \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/885b73c9d8a7363444d5465b0c813fbe/photo-1668423389856-2a82e96ee01b\"\n                }\n            ],\n            \"backgroundTile\": false,\n            \"backgroundBrightness\": \"dark\",\n            \"backgroundBottomColor\": \"#1b2134\",\n            \"backgroundTopColor\": \"#090f18\",\n            \"canBePublic\": true,\n            \"canBeEnterprise\": true,\n            \"canBeOrg\": true,\n            \"canBePrivate\": true,\n            \"canInvite\": true\n        },\n        \"shortLink\": \"QThpOGQw\",\n        \"subscribed\": false,\n        \"labelNames\": {\n            \"green\": \"\",\n            \"yellow\": \"\",\n            \"orange\": \"\",\n            \"red\": \"\",\n            \"purple\": \"\",\n            \"blue\": \"\",\n            \"sky\": \"\",\n            \"lime\": \"\",\n            \"pink\": \"\",\n            \"black\": \"\",\n            \"green_dark\": \"\",\n            \"yellow_dark\": \"\",\n            \"orange_dark\": \"\",\n            \"red_dark\": \"\",\n            \"purple_dark\": \"\",\n            \"blue_dark\": \"\",\n            \"sky_dark\": \"\",\n            \"lime_dark\": \"\",\n            \"pink_dark\": \"\",\n            \"black_dark\": \"\",\n            \"green_light\": \"\",\n            \"yellow_light\": \"\",\n            \"orange_light\": \"\",\n            \"red_light\": \"\",\n            \"purple_light\": \"\",\n            \"blue_light\": \"\",\n            \"sky_light\": \"\",\n            \"lime_light\": \"\",\n            \"pink_light\": \"\",\n            \"black_light\": \"\"\n        },\n        \"powerUps\": [],\n        \"dateLastActivity\": null,\n        \"dateLastView\": \"2022-11-15T10:36:40.598Z\",\n        \"shortUrl\": \"https://trello.com/b/QThpOGQw\",\n        \"idTags\": [],\n        \"datePluginDisable\": null,\n        \"creationMethod\": \"automatic\",\n        \"ixUpdate\": \"3\",\n        \"templateGallery\": null,\n        \"enterpriseOwned\": false,\n        \"idBoardSource\": null,\n        \"premiumFeatures\": [\n            \"additionalBoardBackgrounds\",\n            \"additionalStickers\",\n            \"customBoardBackgrounds\",\n            \"customEmoji\",\n            \"customStickers\",\n            \"plugins\",\n            \"views\",\n            \"workspaceViews\"\n        ],\n        \"idMemberCreator\": \"63736a24c6df3e00c1a28d7a\",\n        \"memberships\": [\n            {\n                \"idMember\": \"63736a24c6df3e00c1a28d7a\",\n                \"memberType\": \"admin\",\n                \"unconfirmed\": false,\n                \"deactivated\": false,\n                \"id\": \"63736abc553c5702bc4ab1e7\"\n            }\n        ]\n    },\n    {\n        \"id\": \"63736b4a6cab920569cb4976\",\n        \"name\": \"tablica z api\",\n        \"desc\": \"\",\n        \"descData\": null,\n        \"closed\": false,\n        \"dateClosed\": null,\n        \"idOrganization\": \"63736a2b2693f10129384d9f\",\n        \"idEnterprise\": null,\n        \"limits\": {\n            \"attachments\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 36000,\n                    \"warnAt\": 28800\n                },\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000,\n                    \"warnAt\": 800\n                }\n            },\n            \"boards\": {\n                \"totalMembersPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1600,\n                    \"warnAt\": 1280\n                },\n                \"totalAccessRequestsPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 4000,\n                    \"warnAt\": 3200\n                }\n            },\n            \"cards\": {\n                \"openPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 5000,\n                    \"warnAt\": 4000\n                },\n                \"openPerList\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 5000,\n                    \"warnAt\": 4000\n                },\n                \"totalPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 2000000,\n                    \"warnAt\": 1600000\n                },\n                \"totalPerList\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000000,\n                    \"warnAt\": 800000\n                }\n            },\n            \"checklists\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1800000,\n                    \"warnAt\": 1440000\n                },\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 500,\n                    \"warnAt\": 400\n                }\n            },\n            \"checkItems\": {\n                \"perChecklist\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 200,\n                    \"warnAt\": 160\n                }\n            },\n            \"customFields\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 50,\n                    \"warnAt\": 40\n                }\n            },\n            \"customFieldOptions\": {\n                \"perField\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 50,\n                    \"warnAt\": 40\n                }\n            },\n            \"labels\": {\n                \"perBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 1000,\n                    \"warnAt\": 800\n                }\n            },\n            \"lists\": {\n                \"openPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 500,\n                    \"warnAt\": 400\n                },\n                \"totalPerBoard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 3000,\n                    \"warnAt\": 2400\n                }\n            },\n            \"stickers\": {\n                \"perCard\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 70,\n                    \"warnAt\": 56\n                }\n            },\n            \"reactions\": {\n                \"perAction\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 900,\n                    \"warnAt\": 720\n                },\n                \"uniquePerAction\": {\n                    \"status\": \"ok\",\n                    \"disableAt\": 17,\n                    \"warnAt\": 14\n                }\n            }\n        },\n        \"pinned\": false,\n        \"starred\": false,\n        \"url\": \"https://trello.com/b/4hDwTVcd/tablica-z-api\",\n        \"prefs\": {\n            \"permissionLevel\": \"private\",\n            \"hideVotes\": false,\n            \"voting\": \"disabled\",\n            \"comments\": \"members\",\n            \"invitations\": \"members\",\n            \"selfJoin\": true,\n            \"cardCovers\": true,\n            \"isTemplate\": false,\n            \"cardAging\": \"regular\",\n            \"calendarFeedEnabled\": false,\n            \"hiddenPluginBoardButtons\": [],\n            \"switcherViews\": [\n                {\n                    \"_id\": \"63736b4a6cab920569cb4977\",\n                    \"viewType\": \"Board\",\n                    \"enabled\": true,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb4977\"\n                },\n                {\n                    \"_id\": \"63736b4a6cab920569cb4978\",\n                    \"viewType\": \"Table\",\n                    \"enabled\": true,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb4978\"\n                },\n                {\n                    \"_id\": \"63736b4a6cab920569cb4979\",\n                    \"viewType\": \"Calendar\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb4979\"\n                },\n                {\n                    \"_id\": \"63736b4a6cab920569cb497a\",\n                    \"viewType\": \"Dashboard\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb497a\"\n                },\n                {\n                    \"_id\": \"63736b4a6cab920569cb497b\",\n                    \"viewType\": \"Timeline\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb497b\"\n                },\n                {\n                    \"_id\": \"63736b4a6cab920569cb497c\",\n                    \"viewType\": \"Map\",\n                    \"enabled\": false,\n                    \"typeName\": \"SwitcherViews\",\n                    \"id\": \"63736b4a6cab920569cb497c\"\n                }\n            ],\n            \"background\": \"blue\",\n            \"backgroundColor\": \"#0079BF\",\n            \"backgroundImage\": null,\n            \"backgroundImageScaled\": null,\n            \"backgroundTile\": false,\n            \"backgroundBrightness\": \"dark\",\n            \"backgroundBottomColor\": \"#0079BF\",\n            \"backgroundTopColor\": \"#0079BF\",\n            \"canBePublic\": true,\n            \"canBeEnterprise\": true,\n            \"canBeOrg\": true,\n            \"canBePrivate\": true,\n            \"canInvite\": true\n        },\n        \"shortLink\": \"4hDwTVcd\",\n        \"subscribed\": false,\n        \"labelNames\": {\n            \"green\": \"\",\n            \"yellow\": \"\",\n            \"orange\": \"\",\n            \"red\": \"\",\n            \"purple\": \"\",\n            \"blue\": \"\",\n            \"sky\": \"\",\n            \"lime\": \"\",\n            \"pink\": \"\",\n            \"black\": \"\",\n            \"green_dark\": \"\",\n            \"yellow_dark\": \"\",\n            \"orange_dark\": \"\",\n            \"red_dark\": \"\",\n            \"purple_dark\": \"\",\n            \"blue_dark\": \"\",\n            \"sky_dark\": \"\",\n            \"lime_dark\": \"\",\n            \"pink_dark\": \"\",\n            \"black_dark\": \"\",\n            \"green_light\": \"\",\n            \"yellow_light\": \"\",\n            \"orange_light\": \"\",\n            \"red_light\": \"\",\n            \"purple_light\": \"\",\n            \"blue_light\": \"\",\n            \"sky_light\": \"\",\n            \"lime_light\": \"\",\n            \"pink_light\": \"\",\n            \"black_light\": \"\"\n        },\n        \"powerUps\": [],\n        \"dateLastActivity\": null,\n        \"dateLastView\": \"2022-11-15T11:22:46.934Z\",\n        \"shortUrl\": \"https://trello.com/b/4hDwTVcd\",\n        \"idTags\": [],\n        \"datePluginDisable\": null,\n        \"creationMethod\": \"automatic\",\n        \"ixUpdate\": \"5\",\n        \"templateGallery\": null,\n        \"enterpriseOwned\": false,\n        \"idBoardSource\": null,\n        \"premiumFeatures\": [\n            \"additionalBoardBackgrounds\",\n            \"additionalStickers\",\n            \"customBoardBackgrounds\",\n            \"customEmoji\",\n            \"customStickers\",\n            \"plugins\",\n            \"views\",\n            \"workspaceViews\"\n        ],\n        \"idMemberCreator\": \"63736a24c6df3e00c1a28d7a\",\n        \"memberships\": [\n            {\n                \"idMember\": \"63736a24c6df3e00c1a28d7a\",\n                \"memberType\": \"admin\",\n                \"unconfirmed\": false,\n                \"deactivated\": false,\n                \"id\": \"63736b4a6cab920569cb4981\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Tworzenie nowej listy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify list name\", () => {\r",
+							"    pm.expect(resBody.name).eql(pm.collectionVariables.get(\"listName\"));\r",
+							"})\r",
+							"\r",
+							"pm.collectionVariables.set(\"listID\", resBody.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}/lists?key={{key}}&token={{token}}&name={{listName}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{listName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tworzenie nowej listy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify list name\", () => {\r",
+							"    pm.expect(resBody.name).eql(pm.collectionVariables.get(\"listName2\"));\r",
+							"})\r",
+							"\r",
+							"pm.collectionVariables.set(\"listID2\", resBody.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}/lists?key={{key}}&token={{token}}&name={{listName2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{listName2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokazywanie dostępnych list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify closed value\", () => {\r",
+							"    // pm.expect(resBody.closed)\r",
+							"    resBody.map(item => {\r",
+							"        pm.expect(item.closed).to.eql(false);\r",
+							"    })\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}/lists?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tworzenie nowej karty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify value of id list and id board\", () => {\r",
+							"    pm.expect(resBody.idList).to.eql(pm.collectionVariables.get(\"listID\"));\r",
+							"    pm.expect(resBody.idBoard).to.eql(pm.collectionVariables.get(\"boardID\"));\r",
+							"})\r",
+							"\r",
+							"pm.collectionVariables.set(\"cardID\", resBody.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?key={{key}}&token={{token}}&idList={{listID}}&name={{cardName}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "idList",
+							"value": "{{listID}}"
+						},
+						{
+							"key": "name",
+							"value": "{{cardName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tworzenie nowej karty 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"should verify status code\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify value of id list and id board\", () => {\r",
+							"    pm.expect(resBody.idList).to.eql(pm.collectionVariables.get(\"listID2\"));\r",
+							"    pm.expect(resBody.idBoard).to.eql(pm.collectionVariables.get(\"boardID\"));\r",
+							"})\r",
+							"\r",
+							"pm.collectionVariables.set(\"cardID2\", resBody.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?key={{key}}&token={{token}}&idList={{listID2}}&name={{cardName2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "idList",
+							"value": "{{listID2}}"
+						},
+						{
+							"key": "name",
+							"value": "{{cardName2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokazywanie listy kart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"});\r",
+							"\r",
+							"pm.test(\"should verify subscribed value, should be false\", () => {\r",
+							"    // pm.expect(resBody.closed)\r",
+							"    resBody.map(item => {\r",
+							"        pm.expect(item.subscribed).to.eql(false);\r",
+							"    })\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}/cards?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Aktualizacja karty 'w trakcie testow'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify updated name value\", () => {\r",
+							"    pm.expect(resBody.name).to.eql(pm.collectionVariables.get(\"updateCardName\"));\r",
+							"})\r",
+							"\r",
+							"pm.test (\"verify updated desc value\", () => {\r",
+							"    pm.expect(resBody.desc).to.eql(pm.collectionVariables.get(\"updateCardDesc\"));\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/{{cardID}}/?key={{key}}&token={{token}}&name={{updateCardName}}&desc={{updateCardDesc}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"{{cardID}}",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{updateCardName}}"
+						},
+						{
+							"key": "desc",
+							"value": "{{updateCardDesc}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Aktualizacja karty 'po testach'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify updated name value\", () => {\r",
+							"    pm.expect(resBody.name).to.eql(pm.collectionVariables.get(\"updateCardName2\"));\r",
+							"})\r",
+							"\r",
+							"pm.test (\"verify updated desc value\", () => {\r",
+							"    pm.expect(resBody.desc).to.eql(pm.collectionVariables.get(\"updateCardDesc\"));\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/{{cardID2}}/?key={{key}}&token={{token}}&name={{updateCardName2}}&desc={{updateCardDesc}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"{{cardID2}}",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{updateCardName2}}"
+						},
+						{
+							"key": "desc",
+							"value": "{{updateCardDesc}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuwanie karty w liscie 'w trakcie testow'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/{{cardID}}/?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"{{cardID}}",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokazywanie list stworzonych tablic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}/cards?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Trello var",
+			"value": "https://api.trello.com",
+			"disabled": true
+		},
+		{
+			"key": "baseURL",
+			"value": "https://api.trello.com/1",
+			"type": "string"
+		},
+		{
+			"key": "boardName",
+			"value": "Tablica z API",
+			"type": "string"
+		},
+		{
+			"key": "boardID",
+			"value": ""
+		},
+		{
+			"key": "listName",
+			"value": "w trakcie testów",
+			"type": "string"
+		},
+		{
+			"key": "listName2",
+			"value": "po testach",
+			"type": "string"
+		},
+		{
+			"key": "listID",
+			"value": ""
+		},
+		{
+			"key": "listID2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cardName",
+			"value": "swiezutka karta",
+			"type": "string"
+		},
+		{
+			"key": "cardName2",
+			"value": "jeszcze swiezsza karta",
+			"type": "string"
+		},
+		{
+			"key": "cardID",
+			"value": ""
+		},
+		{
+			"key": "cardID2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "updateCardName",
+			"value": "to juz jest stara karta",
+			"type": "string"
+		},
+		{
+			"key": "updateCardName2",
+			"value": "niepotrzebna karta",
+			"type": "string"
+		},
+		{
+			"key": "updateCardDesc",
+			"value": "test test test",
+			"type": "string"
+		}
+	]
+}

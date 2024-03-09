@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "d3ee0e59-a4fa-4e24-8b17-7421b1d6f123",
+		"name": "JSON Placeholder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22614479",
+		"_collection_link": "https://cloudy-crater-719362.postman.co/workspace/Gravity-Global-Training-Workspa~9097d6e6-f065-411c-a928-c69dad7bdee6/collection/22614479-d3ee0e59-a4fa-4e24-8b17-7421b1d6f123?action=share&source=collection_link&creator=22614479"
+	},
+	"item": [
+		{
+			"name": "GET Posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should verify response status code\", () => {\r",
+							"    // console.log(pm.response)\r",
+							"    // pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.code).to.eql(200)\r",
+							"    pm.expect(pm.response.code).to.be.a(\"number\")\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 404])\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify response time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.lessThan(250)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify status OK\", () => {\r",
+							"    pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"    pm.expect(pm.response.status).to.be.a(\"string\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should verify post ID\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    console.log(responseBody[0].id)\r",
+							"    pm.expect(responseBody[0].id).to.eql(1);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify lenght of name\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody[1].name).to.have.lengthOf(41);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify response email\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody[1].email).to.include(\"@\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify response all email\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    responseBody.map(obiekt => {\r",
+							"        pm.expect(obiekt.email).to.include(\"@\");\r",
+							"    })\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify content type response\", () => {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"should verify content type value\", () => {\r",
+							"    // console.log(pm.response.headers.get(\"Content-Type\"))\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// pm.test(\"Global\", () => {\r",
+							"//     const expectedTitle = pm.globals.get(\"postTitle\");\r",
+							"//     const resBody = pm.response.json();\r",
+							"//     pm.expect(resBody.title).to.eql(expectedTitle)\r",
+							"// })\r",
+							"\r",
+							"// pm.test(\"Collection\", () => {\r",
+							"//     const expectedURL = pm.collectionVariables.get(\"baseURL\")\r",
+							"//     console.log(expectedURL);\r",
+							"// })\r",
+							"\r",
+							"// pm.test(\"Environment\", () => {\r",
+							"//     const expectedUsername = pm.environment.get(\"username\")\r",
+							"//     console.log(expectedUsername);\r",
+							"// })\r",
+							"\r",
+							"// pm.test(\"Set Global\", () => {\r",
+							"//     pm.globals.set(\"firstValue\", \"nextValue\")\r",
+							"// })\r",
+							"\r",
+							"// pm.test(\"Set Global\", () => {\r",
+							"//     pm.globals.unset(\"firstValue\", \"nextValue\")\r",
+							"// })\r",
+							"\r",
+							"// pm.test(\"Status code is 201\", () => {\r",
+							"//     pm.response.to.have.status(201);\r",
+							"// });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": {{userid}},\r\n    \"id\": 1625,\r\n    \"title\": \"{{postTitle}}\",\r\n    \"body\": \"mój pierwszy post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function GeneratorEmail() {\r",
+							"    const randomNumbers = Math.floor(Math.random() * (100000000 - 1) + 1);\r",
+							"    const randomEmail = (\"test\" + randomNumbers + \"@test.pl\");\r",
+							"    pm.globals.set(\"randomEmail\", \"test\" + randomNumbers + \"@test.mail\");\r",
+							"}\r",
+							"\r",
+							"GeneratorEmail();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Leanne Graham\",\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{randomEmail}}\",\r\n    \"address\": {\r\n        \"street\": \"Kulas Light\",\r\n        \"suite\": \"Apt. 556\",\r\n        \"city\": \"Gwenborough\",\r\n        \"zipcode\": \"92998-3874\",\r\n        \"geo\": {\r\n            \"lat\": \"-37.3159\",\r\n            \"lng\": \"81.1496\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users/2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://jsonplaceholder.typicode.com",
+			"type": "string"
+		}
+	]
+}
